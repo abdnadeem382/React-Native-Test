@@ -1,13 +1,16 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, ScrollView } from 'react-native';
+import Constants from expo-constants;
 
 export default function App() {
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
+      <Text style = {styles.statusBar}>Header</Text>
       <Text>Open up App.js to start working on your app!</Text>
-    </View>
+    </ScrollView>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -16,4 +19,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  statusBar:{
+    backgroundColor:"#242424",
+    height: Constants.statusBarHeight
+  }
 });
