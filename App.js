@@ -1,24 +1,26 @@
 import React from 'react';
-import { View, StyleSheet, Text, ImageBackground } from 'react-native';
+import { View, StyleSheet, Text, ImageBackground, FlatList } from 'react-native';
 import Constants from 'expo-constants';
+import Home from './Screens/Home'
+import Employee from './Screens/Employee';
 
-export default function App() {
+export default  App= ()=> {
+
   return (
-    
-    <View style={styles.container}>
-      <ImageBackground style={styles.background} source={require('./assets/bg.jpg')}>
+      //<Home/>
+      <Employee/>
+      // <ImageBackground style={styles.background} source={require('./assets/bg.jpg')}>
         
-        <View style ={styles.overlayContainer}>
-          <View style={styles.top}>
-            <Text style={styles.heading} onPress={()=>{alert("Home")}}>HOME</Text>
-            <Text style={styles.heading} onPress={()=>{alert("Profile")}}>PROFILE</Text>
-            <Text style={styles.heading} onPress={()=>{alert("Posts")}}>POSTS</Text>
-            <Text style={styles.heading} onPress={()=>{alert("Settings")}}>SETTINGS</Text>
-          </View> 
-        </View>
-      </ImageBackground>
-
-    </View>
+      //   <View style ={styles.overlayContainer}>
+      //     <View style={styles.top}>
+      //       <Text style={styles.heading} onPress={()=>{alert("Home")}}>HOME</Text>
+      //       <Text style={styles.heading} onPress={()=>{alert("Profile")}}>PROFILE</Text>
+      //       <Text style={styles.heading} onPress={()=>{alert("Posts")}}>POSTS</Text>
+      //       <Text style={styles.heading} onPress={()=>{alert("Settings")}}>SETTINGS</Text>
+      //     </View> 
+      //   </View>
+      // </ImageBackground>
+      
   );
 }
 
@@ -28,7 +30,8 @@ const styles = StyleSheet.create({
     marginTop:Constants.statusBarHeight,
     justifyContent:"center",
     width:"100%",
-    height:'100%'
+    height:'100%',
+    backgroundColor :"#bfbcb2"
   },
     overlayContainer:{
       flex:1,
@@ -61,6 +64,7 @@ const styles = StyleSheet.create({
       width:210,
       textAlign:"center",
       marginTop:20
-    }
+    },
+    
   
   });
