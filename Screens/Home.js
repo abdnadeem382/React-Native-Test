@@ -1,33 +1,24 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Text, Image, FlatList } from 'react-native';
-import Constants from 'expo-constants';
 import {Card, FAB} from 'react-native-paper'
 
 
 export default class Home extends Component {
      data = [
-        {id:1, name: "Abdullah", age:22},
-        {id:2, name: "Moeez", age:20},
-        {id:3, name: "Hammad", age:20},
-        {id:4, name: "Abrar", age:21},
-        {id:1, name: "Abdullah", age:22},
-        {id:2, name: "Moeez", age:20},
-        {id:3, name: "Hammad", age:20},
-        {id:4, name: "Abrar", age:21},
-        {id:1, name: "Abdullah", age:22},
-        {id:2, name: "Moeez", age:20},
-        {id:3, name: "Hammad", age:20},
-        {id:4, name: "Abrar", age:21}
+        {id:"1", name: "Abdullah", age:22, email: "abdnadeem382@gmail.com", phone: "03345009516", position:"react native"},
+        {id:"2", name: "Moeez", age:20, email: "moeezatlas@hotmail.com", phone: "03341234567", position :"Node JS"},
+        {id:"3", name: "Hammad", age:20, email: "hammadahmad@gmail.com", phone: "03311234567", position:"Machine Learning"},
+        {id:"4", name: "Abrar", age:21, email: "abrar123@gmail.com", phone: "03001234567", position:"Mongo DB"},
       ];
 
        renderData = ((item)=>{
         return(
-          <Card style={styles.card} >
+          <Card style={styles.card} onPress={()=>this.props.navigation.navigate("Profile",{item})} >
             <View style={styles.cardView}>
                 <Image source={require('../assets/abd.jpeg')} style={styles.img}></Image>
                 <View style={styles.heading}>
-                    <Text style={styles.cardText}>{`name: ${item.name}   `}</Text>
-                    <Text style={{fontSize:12}}>{`age: ${item.age} `}</Text>
+                    <Text style={styles.cardText}>{`${item.name}   `}</Text>
+                    <Text style={{fontSize:14}}>{`${item.position} `}</Text>
                 </View>
             
             </View>
@@ -40,15 +31,14 @@ export default class Home extends Component {
             <View style={styles.container}>
                 <FlatList data ={this.data}
                 renderItem={({item})=>{return this.renderData(item)}}
-                keyExtractor={(item)=>{`${item.id}`}}
+                keyExtractor={(item)=>{item.id}}
                 > 
                 </FlatList>
-                <FAB
+                <FAB onPress={()=>{this.props.navigation.navigate("Add Employee")}}
                     style={styles.fab}
                     small ={false}
                     icon="plus"
                     color="#fafafa"
-                    onPress={() => alert('Pressed')}
                 />
       </View>
         )
@@ -58,7 +48,6 @@ export default class Home extends Component {
 const styles = StyleSheet.create({
     container: {
         flex:1,
-        marginTop:Constants.statusBarHeight,
         justifyContent:"center",
         width:"100%",
         height:'100%',
@@ -85,7 +74,7 @@ const styles = StyleSheet.create({
         flexDirection: "row"
       },
       cardText:{
-        fontSize:20
+        fontSize:23
       },
       img:{
           width:60,

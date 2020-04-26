@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, Text, Modal } from 'react-native';
+import { View, StyleSheet, Text, Modal, Alert } from 'react-native';
 import {TextInput, Button} from 'react-native-paper'
-import Constants from 'expo-constants';
+import * as Permissions from 'expo-permissions';
+import * as ImagePicker from 'expo-image-picker';
 
 
 export default Employee = () =>{
@@ -11,6 +12,40 @@ export default Employee = () =>{
    // const [Salary, setSalary] = useState("");
     const [Picture, setPicture]= useState("")
     const [modal, setModal]= useState(false)
+
+    const pickFromGallery = async ()=>{
+        const {granted} = await Permissions.askAsync(Permissions.CAMERA_ROLL)
+        if (granted){
+            let data = await ImagePicker.launchImageLibraryAsync({
+                allowsEditing: true,
+                quality:0.5,
+                aspect:[1,1],
+                mediaTypes:ImagePicker.MediaTypeOptions.Images
+
+            })
+            alert(data)
+
+        }
+        else{
+            Alert.alert("Please grant permission to access photos")
+        }
+    }
+
+    const pickFromCamera = async ()=>{
+        const {granted} = await Permissions.askAsync(Permissions.CAMERA)
+        if(granted){
+            let data = await ImagePicker.launchCameraAsync({
+                allowsEditing:true,
+                aspect:[1,1],
+                mediaTypes:ImagePicker.MediaTypeOptions.Images,
+                quality:1
+            })
+            alert(data)
+        }
+        else{
+            Alert.alert("Please grant permission to access camera")
+        }
+    }
 
     return (
         <View style = {styles.container}>
@@ -69,14 +104,14 @@ export default Employee = () =>{
                     <Button icon="camera"
                         mode="contained"
                         theme = {theme}
-                        onPress={()=>alert("camera")}>
+                        onPress={()=>{pickFromCamera()}}>
                         Camera
                     </Button>
 
                     <Button icon="image-area"
                         mode="contained"
                         theme = {theme}
-                        onPress={()=> alert("gallery")}>
+                        onPress={()=> {pickFromGallery()}}>
                         Gallery
                     </Button>
 
@@ -117,15 +152,15 @@ export default Employee = () =>{
 //                 onChangeText={text => setSalary({ text })}/>
 
 const theme = {
-    color:{
-        primary: "#06204a"
+    colors:{
+        primary: "#3e5af7",
+        accent: "#3e5af7"
     }
 }
 
 const styles = StyleSheet.create({
     container: {
         flex:1,
-        marginTop:Constants.statusBarHeight,
         width:"100%",
         height:'100%',
         backgroundColor:"#c8ccc9"
