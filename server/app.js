@@ -21,7 +21,11 @@ mongoose.connection.on("error",(err)=>{
 })
 
 app.get('/',(req,res)=>{
-    res.send("welcome");
+    Employee.find({}).then(data=>{
+        res.send(data)
+    }).catch(err=>{
+        console.log(err);
+    })
 })
 
 app.post("/send", (req, res)=>{
@@ -39,6 +43,32 @@ app.post("/send", (req, res)=>{
         res.send("Success!");
     }))
     .catch(err=>{
+        console.log(err);
+    })
+})
+
+app.post('/delete', (req,res)=>{
+    Employee.findByIdAndDelete(req.body.id)
+    .then((data)=>{
+        console.log(data);
+        res.send("Deleted!");
+    }).catch(err=>{
+        console.log(err);
+    })
+})
+
+app.post('/update',(req,res)=>{
+    Employee.findByIdAndUpdate(req.body.id, {
+        name: req.body.name,
+        email: req.body.email,
+        phone: req.body.phone,
+        position: req.body.position,
+        salary: req.body.salary,
+        picture: req.body.picture
+    }).then(data=>{
+        console.log(data);
+        res.send("Updated!");
+    }).catch(err=>{
         console.log(err);
     })
 })
