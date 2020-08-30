@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, Text, Modal, Alert } from 'react-native';
+import { View, StyleSheet, Modal, Alert } from 'react-native';
 import {TextInput, Button} from 'react-native-paper'
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
@@ -10,7 +10,7 @@ export default Employee = () =>{
     const [Phone, setPhone] = useState("");
     const [Email, setEmail]= useState("")
    // const [Salary, setSalary] = useState("");
-    const [Picture, setPicture]= useState("")
+    const [picture, setPicture]= useState("")
     const [modal, setModal]= useState(false)
 
     const pickFromGallery = async ()=>{
@@ -23,12 +23,37 @@ export default Employee = () =>{
                 mediaTypes:ImagePicker.MediaTypeOptions.Images
 
             })
-            alert(data)
+            if(!data.cancelled){
+                let newFile = {
+                    uri: data.uri,
+                    type: `test/${data.uri.split(".")[1]}`,
+                    name: `test.${data.uri.split(".")[1]}`
+                }
+                handleUpload(newFile);
+            }
 
         }
         else{
             Alert.alert("Please grant permission to access photos")
         }
+    }
+
+    const handleUpload = (image)=>{
+        const data = new FormData();
+        data.append("file", image);
+        data.append("upload_preset", "EmployeeApp");
+        data.append("cloud_name", "abdnadeem");
+        fetch("https://api.cloudinary.com/v1_1/abdnadeem/image/upload", {
+            method: "post",
+            body: data
+        }).then(res=>res.json()).
+        then(data=>{
+            console.log(data)
+            setPicture(data.url);
+            setModal(false);
+        });
+
+        
     }
 
     const pickFromCamera = async ()=>{
@@ -40,7 +65,14 @@ export default Employee = () =>{
                 mediaTypes:ImagePicker.MediaTypeOptions.Images,
                 quality:1
             })
-            alert(data)
+            if(!data.cancelled){
+                let newFile = {
+                    uri: data.uri,
+                    type: `test/${data.uri.split(".")[1]}`,
+                    name: `test.${data.uri.split(".")[1]}`
+                }
+                handleUpload(newFile);
+            }
         }
         else{
             Alert.alert("Please grant permission to access camera")
@@ -77,7 +109,7 @@ export default Employee = () =>{
 
             <Button 
                 style={styles.uploadBtn}
-                icon="upload"
+                icon={(picture === "")? "upload" : "check" }
                 mode="contained"
                 theme = {theme}
                 onPress={()=>setModal(true)}>
@@ -124,21 +156,7 @@ export default Employee = () =>{
                 </Button>
             
             </View>
-            
-            
             </Modal>
-            
-            <TextInput
-                style = {styles.text}
-                theme = {theme}
-                value={Name}/>
-
-            <TextInput
-                style = {styles.text}
-                theme = {theme}
-                value={Email}/>
-            
-            
         </View>
     )
 }

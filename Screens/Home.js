@@ -5,10 +5,10 @@ import {Card, FAB} from 'react-native-paper'
 
 export default class Home extends Component {
      data = [
-        {id:"1", name: "Abdullah", age:22, email: "abdnadeem382@gmail.com", phone: "03345009516", position:"react native"},
-        {id:"2", name: "Moeez", age:20, email: "moeezatlas@hotmail.com", phone: "03341234567", position :"Node JS"},
-        {id:"3", name: "Hammad", age:20, email: "hammadahmad@gmail.com", phone: "03311234567", position:"Machine Learning"},
-        {id:"4", name: "Abrar", age:21, email: "abrar123@gmail.com", phone: "03001234567", position:"Mongo DB"},
+        {id:'1', name: "Abdullah", age:22, email: "abdnadeem382@gmail.com", phone: "03345009516", position:"react native"},
+        {id:'2', name: "Moeez", age:20, email: "moeezatlas@hotmail.com", phone: "03341234567", position :"Node JS"},
+        {id:'3', name: "Hammad", age:20, email: "hammadahmad@gmail.com", phone: "03311234567", position:"Machine Learning"},
+        {id:'4', name: "Abrar", age:21, email: "abrar123@gmail.com", phone: "03001234567", position:"Mongo DB"},
       ];
 
        renderData = ((item)=>{
@@ -31,7 +31,7 @@ export default class Home extends Component {
             <View style={styles.container}>
                 <FlatList data ={this.data}
                 renderItem={({item})=>{return this.renderData(item)}}
-                keyExtractor={(item)=>{item.id}}
+                keyExtractor={(item)=>{ return item.id}}
                 > 
                 </FlatList>
                 <FAB onPress={()=>{this.props.navigation.navigate("Add Employee")}}
